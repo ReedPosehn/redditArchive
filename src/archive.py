@@ -9,10 +9,15 @@ headers = {
 }
 
 
-def illegal_characters(str, URL):
+def illegal_characters(str, img):
+    """Filter out illegal characters, replace them with a blank string if not a image, otherwise a dash.
+
+    str -- the string to evaluate
+    image -- int that describes whether the string should have illegal characters replaced with "" or "-"
+    """
     remove_chars = ["*", '"', "/", "\\", "<", ">", ":", "|", "?"]
     for char in remove_chars:
-        if URL == 0:
+        if img == 0:
             str = str.replace(char, "")
         else:
             str = str.replace(char, "-")

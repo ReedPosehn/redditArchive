@@ -1,5 +1,8 @@
 # Standard .gitignore template provided by github for Python programming
 
+# Backups folder that contain archived posts
+/src/backups/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
