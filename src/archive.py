@@ -13,7 +13,7 @@ headers = {
 }
 
 
-def convertToOldReddit(URL):
+def convert_to_old_reddit(URL):
     """Ensure that it is a reddit link, and if using www, convert to old for consistency
 
     URL -- The reddit URL we want to archive
@@ -41,7 +41,7 @@ def illegal_characters(str, img):
     return str
 
 
-def createDirectory(newDir):
+def create_directory(newDir):
     """Create a new directory
 
     newDir -- The name of the new directory we want to create
@@ -56,7 +56,7 @@ def createDirectory(newDir):
             print("Directory already exists.")
 
 
-def archivePage(title, markup, imgURLS):
+def archive_page(title, markup, imgURLS):
     """Archive the desired content in a directory specified by the post title
 
     title -- The name of the new directory we want to create
@@ -81,13 +81,13 @@ def archivePage(title, markup, imgURLS):
     print("Saved file.")
 
 
-def packageWebpage(argv):
+def package_web_page(argv):
     """Take an argument which should be a reddit URL to archive, and package it
 
     URL -- The reddit URL we want to archive
     """
     # Ensure the URL is using 'old' then grab the HTML and parse it
-    URL = convertToOldReddit(argv[1])
+    URL = convert_to_old_reddit(argv[1])
     htmlPage = requests.get(URL, timeout=10, headers=headers)
     parsedHTML = BeautifulSoup(htmlPage.text, "html.parser")
     # We want to use the title as the folder name
@@ -97,20 +97,8 @@ def packageWebpage(argv):
     for imgLink in parsedHTML.find_all("a", "post-link"):
         imgURLS.append(imgLink.get("href"))
     # Create directory to store backups
-    createDirectory("backups")
+    create_directory("backups")
     # Create a new directory to store the archived reddit post information
-    createDirectory("backups\\" + title)
+    create_directory("backups\\" + title)
     # Place into the new directory the markup and images
-    archivePage(title, parsedHTML, imgURLS)
-
-
-def main(argv):
-    # Ensure we have at least one argument
-    if len(argv) > 1:
-        packageWebpage(argv)
-    else:
-        print("Please provide a URL to archive as the first argument.")
-
-
-if __name__ == "__main__":
-    main(sys.argv)
+    archive_page(title, parsedHTML, imgURLS)
